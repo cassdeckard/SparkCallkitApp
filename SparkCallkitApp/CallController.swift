@@ -5,6 +5,9 @@ class CallController: UIViewController {
     private let spark: Spark
     private let jwtAuthentication = JWTAuthenticator()
     
+    let localMediaView = MediaRenderView()
+    let remoteMediaView = MediaRenderView()
+    
     let usernameLabel: UILabel = {
         let label = UILabel()
         
@@ -36,6 +39,11 @@ class CallController: UIViewController {
         
         view.addSubview(usernameLabel)
         view.addSubview(callButton)
+        view.addSubview(remoteMediaView)
+        view.addSubview(localMediaView)
+        
+        remoteMediaView.backgroundColor = .red
+        localMediaView.backgroundColor = .green
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,6 +69,14 @@ class CallController: UIViewController {
         callButton.sizeToFit()
         callButton.frame.origin.x = view.frame.midX - callButton.frame.width / 2
         callButton.frame.origin.y = usernameLabel.frame.maxY + 40
+        
+        remoteMediaView.frame.origin.y = view.frame.midY
+        remoteMediaView.frame.size.width = view.frame.width
+        remoteMediaView.frame.size.height = view.frame.height / 2
+        
+        localMediaView.frame.size.width = remoteMediaView.frame.width * 0.5
+        localMediaView.frame.size.height = remoteMediaView.frame.height * 0.5
+        localMediaView.frame.origin.y = view.frame.height - localMediaView.frame.height
     }
     
     public func startClient(jwt: String) {
