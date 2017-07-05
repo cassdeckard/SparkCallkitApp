@@ -1,0 +1,42 @@
+PODS:
+  - Alamofire (4.0.1)
+  - AlamofireObjectMapper (4.0.0):
+    - Alamofire (~> 4.0)
+    - ObjectMapper (~> 2.0)
+  - KeychainAccess (3.0.2)
+  - ObjectMapper (2.0.0)
+  - SparkSDK (1.2.0):
+    - Alamofire (~> 4.0.0)
+    - AlamofireObjectMapper (~> 4.0.0)
+    - KeychainAccess (~> 3.0.0)
+    - ObjectMapper (~> 2.0.0)
+    - Starscream (~> 2.0.0)
+    - SwiftyJSON (~> 3.1.0)
+  - Starscream (2.0.4)
+  - SwiftyJSON (3.1.4)
+
+DEPENDENCIES:
+  - SparkSDK (from `https://github.com/ciscospark/spark-ios-sdk.git`, branch `develop`)
+
+EXTERNAL SOURCES:
+  SparkSDK:
+    :branch: develop
+    :git: https://github.com/ciscospark/spark-ios-sdk.git
+
+CHECKOUT OPTIONS:
+  SparkSDK:
+    :commit: 48922092b10dc44d9845709bff7dfabe28c496c5
+    :git: https://github.com/ciscospark/spark-ios-sdk.git
+
+SPEC CHECKSUMS:
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  AlamofireObjectMapper: 9faa3ce5a240efda1b209009a2d6e1e949227abc
+  KeychainAccess: a986406022dfc7c634c691ad3bec670cc6a32002
+  ObjectMapper: aed2570edabbd3c9b26c939e1cabdb6558f933e0
+  SparkSDK: b8e1f8d5fd128a9228c50da94eb70ebb2a3e0ba5
+  Starscream: df5974ee928b157c8eda8af8de7c620276b7dfcc
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+
+PODFILE CHECKSUM: 001a01c06c5906451acf96a8123fad9cd60e8433
+
+COCOAPODS: 1.2.0

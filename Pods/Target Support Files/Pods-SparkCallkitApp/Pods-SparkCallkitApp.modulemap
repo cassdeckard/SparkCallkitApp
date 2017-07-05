@@ -1,0 +1,6 @@
+framework module Pods_SparkCallkitApp {
+  umbrella header "Pods-SparkCallkitApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
