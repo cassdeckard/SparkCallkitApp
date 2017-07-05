@@ -25,10 +25,26 @@ class ViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
+        wilmaButton.addTarget(self, action: #selector(wilmaTapped), for: .touchUpInside)
+        xavierButton.addTarget(self, action: #selector(xavierTapped), for: .touchUpInside)
+        
         view.backgroundColor = .white
         
         view.addSubview(wilmaButton)
         view.addSubview(xavierButton)
+    }
+    
+    func wilmaTapped() {
+        loginWith(jwtToken: "TODO PUT A JWT TOKEN HERE")
+    }
+    
+    func xavierTapped() {
+        loginWith(jwtToken: "TODO PUT A JWT TOKEN HERE")
+    }
+    
+    func loginWith(jwtToken: String) {
+        let callController = CallController(jwtToken: jwtToken)
+        navigationController?.pushViewController(callController, animated: true)
     }
     
     required init?(coder aDecoder: NSCoder) {
