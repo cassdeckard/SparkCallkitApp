@@ -35,15 +35,15 @@ class ViewController: UIViewController {
     }
     
     func wilmaTapped() {
-        loginWith(jwtToken: "TODO PUT A JWT TOKEN HERE")
+        loginWith(username: "Wilma", jwtToken: "TODO PUT A JWT TOKEN HERE")
     }
     
     func xavierTapped() {
-        loginWith(jwtToken: "TODO PUT A JWT TOKEN HERE")
+        loginWith(username: "Xavier", jwtToken: "TODO PUT A JWT TOKEN HERE")
     }
     
-    func loginWith(jwtToken: String) {
-        let callController = CallController(jwtToken: jwtToken)
+    func loginWith(username: String, jwtToken: String) {
+        let callController = CallController(username: username, jwtToken: jwtToken)
         navigationController?.pushViewController(callController, animated: true)
     }
     
