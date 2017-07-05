@@ -23,14 +23,14 @@ class CallController: UIViewController {
         return button
     }()
 
-    init(username: String, jwtToken: String) {
+    init(user: User) {
         spark = Spark(authenticator: jwtAuthentication)
         
-        usernameLabel.text = "Hello, \(username)!"
+        usernameLabel.text = "Hello, \(user.displayName())!"
         
         super.init(nibName: nil, bundle: nil)
         
-        startClient(jwt: jwtToken)
+        startClient(jwt: user.jwt())
         
         view.backgroundColor = .white
         

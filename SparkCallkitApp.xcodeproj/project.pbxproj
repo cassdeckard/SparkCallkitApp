@@ -11,6 +11,7 @@
 		5AEC48A31F0D2FCB00CFE8CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC48A21F0D2FCB00CFE8CE /* ViewController.swift */; };
 		5AEC48A81F0D2FCB00CFE8CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AEC48A71F0D2FCB00CFE8CE /* Assets.xcassets */; };
 		5AEC48B51F0D35B600CFE8CE /* CallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC48B41F0D35B600CFE8CE /* CallController.swift */; };
+		5AEC48B71F0D3AC800CFE8CE /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC48B61F0D3AC800CFE8CE /* Users.swift */; };
 		F97A99F6CCFDC6C97A51350B /* Pods_SparkCallkitApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE7C57248010BFBC850FD8C /* Pods_SparkCallkitApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 		5AEC48A71F0D2FCB00CFE8CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5AEC48AC1F0D2FCB00CFE8CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5AEC48B41F0D35B600CFE8CE /* CallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallController.swift; sourceTree = "<group>"; };
+		5AEC48B61F0D3AC800CFE8CE /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		DDBB17952585337DE19B7236 /* Pods-SparkCallkitApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SparkCallkitApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SparkCallkitApp/Pods-SparkCallkitApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +74,7 @@
 				5AEC48A71F0D2FCB00CFE8CE /* Assets.xcassets */,
 				5AEC48AC1F0D2FCB00CFE8CE /* Info.plist */,
 				5AEC48B41F0D35B600CFE8CE /* CallController.swift */,
+				5AEC48B61F0D3AC800CFE8CE /* Users.swift */,
 			);
 			path = SparkCallkitApp;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AEC48B71F0D3AC800CFE8CE /* Users.swift in Sources */,
 				5AEC48A31F0D2FCB00CFE8CE /* ViewController.swift in Sources */,
 				5AEC48A11F0D2FCB00CFE8CE /* AppDelegate.swift in Sources */,
 				5AEC48B51F0D35B600CFE8CE /* CallController.swift in Sources */,
