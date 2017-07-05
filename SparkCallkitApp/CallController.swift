@@ -64,7 +64,7 @@ class CallController: UIViewController {
         localMediaView.backgroundColor = .green
         
         callButton.addTarget(self, action: #selector(startCall), for: .touchUpInside)
-        endCallButton.addTarget(self, action: #selector(endCall), for: .touchUpInside)
+        endCallButton.addTarget(self, action: #selector(hangupCall), for: .touchUpInside)
         
         setUpCallHandlers()
     }
@@ -124,11 +124,13 @@ class CallController: UIViewController {
     
     func setUpCallHandlers() {
         spark.phone.onIncoming = { [unowned self] call in
+            self.callButton.isEnabled = false
+            
             print(">>>> callIncoming")
             
             call.onDisconnected = { [unowned self] reason in
                 print(">>>> callDisconnected")
-                self.endCall()
+                self.callIsEnded()
             }
             
             self.activeCall = call
@@ -147,6 +149,8 @@ class CallController: UIViewController {
 
     
     func startCall() {
+        callButton.isEnabled = false
+        
         spark.phone.dial(user.userToCall().sparkId(), option: .audioVideo(local: localMediaView, remote: remoteMediaView)) { [weak self] response in
             //completion handler
             
@@ -166,37 +170,38 @@ class CallController: UIViewController {
                 
                 call.onDisconnected = { reason in
                     print(">>>> callDisconnected")
-                    self?.endCall()
+                    self?.callIsEnded()
                 }
                 
             case .failure(_):
                 print(">>>>> failure...")
-                self?.endCall()
+                self?.callIsEnded()
             }
 
         }
     }
     
-    func endCall() {
+    func hangupCall() {
+        print(">>>>> End Call()")
+        
         if let call = activeCall {
-            print(">>>>> call status: \(call.status)")
-            print(">>>>> call direction: \(call.direction)")
             if call.direction == .incoming && call.status == .ringing {
                 call.reject { error in
-                    //TODO: maybe do something here?
                     print(">>>>> reject error: \(String(describing: error))")
                 }
-            }
-            else {
+            } else {
                 call.hangup { error in
-                    //TODO: maybe do something here?
                     print(">>>>> hangup error: \(String(describing: error))")
                 }
             }
-            
-            endCallButton.isHidden = true
-            activeCall = nil
         }
-
+        
+        callIsEnded()
+    }
+    
+    func callIsEnded() {
+        endCallButton.isHidden = true
+        callButton.isEnabled = true
+        activeCall = nil
     }
 }
