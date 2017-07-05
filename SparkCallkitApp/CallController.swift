@@ -1,13 +1,17 @@
 import UIKit
+import CallKit
 import SparkSDK
 
 class CallController: UIViewController {
-    private let spark: Spark
+    fileprivate let spark: Spark
     private let jwtAuthentication = JWTAuthenticator()
-    private let user: User
+    fileprivate let user: User
     
     let localMediaView = MediaRenderView()
     let remoteMediaView = MediaRenderView()
+    
+    fileprivate let callProvider: CXProvider
+    fileprivate let callController: CXCallController
     
     var activeCall: Call?
     
@@ -48,7 +52,17 @@ class CallController: UIViewController {
         
         usernameLabel.text = "Hello, \(user.displayName())!"
         
+        let providerConfiguration = CXProviderConfiguration(localizedName: "Patient Central")
+        providerConfiguration.supportedHandleTypes = [.generic]
+        providerConfiguration.supportsVideo = true
+        providerConfiguration.ringtoneSound = "Ringtone.caf"
+        callProvider = CXProvider(configuration: providerConfiguration)
+        
+        callController = CXCallController()
+        
         super.init(nibName: nil, bundle: nil)
+        
+        callProvider.setDelegate(self, queue: nil)
         
         startClient(jwt: user.jwt())
         
@@ -64,7 +78,7 @@ class CallController: UIViewController {
         localMediaView.backgroundColor = .green
         
         callButton.addTarget(self, action: #selector(startCall), for: .touchUpInside)
-        endCallButton.addTarget(self, action: #selector(hangupCall), for: .touchUpInside)
+        endCallButton.addTarget(self, action: #selector(hangUp), for: .touchUpInside)
         
         setUpCallHandlers()
     }
@@ -122,6 +136,24 @@ class CallController: UIViewController {
         }
     }
     
+    public func hangUp() {
+        if let uuid = activeCall?.uuid {
+            let endCallAction = CXEndCallAction(call: uuid)
+            let transaction = CXTransaction()
+            transaction.addAction(endCallAction)
+            
+            requestTransaction(transaction)
+        }
+    }
+    
+    private func requestTransaction(_ transaction: CXTransaction) {
+        callController.request(transaction) { error in
+            if let error = error {
+                print("UNEXPECTED FAILURE: Error requesting transaction: \(error)")
+            }
+        }
+    }
+    
     func setUpCallHandlers() {
         spark.phone.onIncoming = { [unowned self] call in
             self.callButton.isEnabled = false
@@ -132,56 +164,58 @@ class CallController: UIViewController {
                 print(">>>> callDisconnected")
                 self.callIsEnded()
             }
-            
-            self.activeCall = call
-            
-            call.answer(option: .audioVideo(local: self.localMediaView, remote: self.remoteMediaView), completionHandler: { [unowned self] error in
-                if let error = error {
-                    print(">>>> error answering call: \(error)")
-                } else {
-                    print(">>>> call answered successfully")
-                    self.endCallButton.isHidden = false
-                }
-            })
 
-        }
-    }
-
-    
-    func startCall() {
-        callButton.isEnabled = false
-        
-        spark.phone.dial(user.userToCall().sparkId(), option: .audioVideo(local: localMediaView, remote: remoteMediaView)) { [weak self] response in
-            //completion handler
+            let callUpdate = CXCallUpdate()
+            callUpdate.remoteHandle = CXHandle(type: .generic, value: self.user.userToCall().displayName())
+            callUpdate.hasVideo = true
             
-            switch response {
-            case .success(let call):
-                
-                self?.endCallButton.isHidden = false
-                self?.activeCall = call
-                
-                call.onRinging = {
-                    print(">>>> callRinging")
+            self.callProvider.reportNewIncomingCall(with: call.uuid, update: callUpdate) { [unowned self] error in
+                if error == nil {
+                    self.activeCall = call
                 }
-                
-                call.onConnected = {
-                    print(">>>> callConnected")
-                }
-                
-                call.onDisconnected = { reason in
-                    print(">>>> callDisconnected")
-                    self?.callIsEnded()
-                }
-                
-            case .failure(_):
-                print(">>>>> failure...")
-                self?.callIsEnded()
             }
 
         }
     }
+
+    func startCall() {
+        callButton.isEnabled = false
+        
+        spark.phone.dial(user.userToCall().sparkId(), option: .audioVideo(local: localMediaView, remote: remoteMediaView)) { [unowned self] response in
+            
+            guard case .success(let call) = response else {
+                self.activeCall = nil
+                return
+            }
+            
+            self.activeCall = call
+            self.endCallButton.isHidden = false
+            
+            call.onRinging = {
+                print(">>>> callRinging")
+            }
+            
+            call.onConnected = {
+                print(">>>> callConnected")
+                self.callProvider.reportOutgoingCall(with: call.uuid, startedConnectingAt: Date())
+            }
+            
+            call.onDisconnected = { reason in
+                print(">>>> callDisconnected")
+                self.callIsEnded()
+            }
+            
+            let handle = CXHandle(type: .generic, value: self.user.userToCall().displayName())
+            let startCallAction = CXStartCallAction(call: call.uuid, handle: handle)
+            startCallAction.isVideo = true
+            
+            let transaction = CXTransaction()
+            transaction.addAction(startCallAction)
+            self.requestTransaction(transaction)
+        }
+    }
     
-    func hangupCall() {
+    func hangupOrRejectCall() {
         print(">>>>> End Call()")
         
         if let call = activeCall {
@@ -203,5 +237,43 @@ class CallController: UIViewController {
         endCallButton.isHidden = true
         callButton.isEnabled = true
         activeCall = nil
+    }
+}
+
+extension CallController: CXProviderDelegate {
+    func providerDidReset(_ provider: CXProvider) {
+        
+    }
+    
+    func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
+        guard let _ = self.activeCall else {
+            action.fail()
+            return
+        }
+        
+        action.fulfill()
+    }
+    
+    func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
+        if let call = activeCall {
+            call.answer(option: .audioVideo(local: self.localMediaView, remote: self.remoteMediaView), completionHandler: { [unowned self] error in
+                if let error = error {
+                    print(">>>> error answering call: \(error)")
+                    action.fail()
+                } else {
+                    print(">>>> call answered successfully")
+                    self.endCallButton.isHidden = false
+                    action.fulfill()
+                }
+            })
+        } else {
+            action.fail()
+        }
+
+    }
+    
+    func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
+        hangupOrRejectCall()
+        action.fulfill()
     }
 }
