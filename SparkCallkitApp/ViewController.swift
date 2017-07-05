@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  SparkCallkitApp
-//
-//  Created by Dev1 on 7/5/17.
-//  Copyright © 2017 asynchrony. All rights reserved.
-//
-
 import UIKit
 
 class ViewController: UIViewController {

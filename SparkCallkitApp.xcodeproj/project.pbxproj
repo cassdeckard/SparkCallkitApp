@@ -9,9 +9,8 @@
 /* Begin PBXBuildFile section */
 		5AEC48A11F0D2FCB00CFE8CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC48A01F0D2FCB00CFE8CE /* AppDelegate.swift */; };
 		5AEC48A31F0D2FCB00CFE8CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC48A21F0D2FCB00CFE8CE /* ViewController.swift */; };
-		5AEC48A61F0D2FCB00CFE8CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AEC48A41F0D2FCB00CFE8CE /* Main.storyboard */; };
 		5AEC48A81F0D2FCB00CFE8CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AEC48A71F0D2FCB00CFE8CE /* Assets.xcassets */; };
-		5AEC48AB1F0D2FCB00CFE8CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AEC48A91F0D2FCB00CFE8CE /* LaunchScreen.storyboard */; };
+		5AEC48B31F0D326B00CFE8CE /* SparkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC48B21F0D326B00CFE8CE /* SparkProvider.swift */; };
 		F97A99F6CCFDC6C97A51350B /* Pods_SparkCallkitApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE7C57248010BFBC850FD8C /* Pods_SparkCallkitApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -21,10 +20,9 @@
 		5AEC489D1F0D2FCB00CFE8CE /* SparkCallkitApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SparkCallkitApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AEC48A01F0D2FCB00CFE8CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AEC48A21F0D2FCB00CFE8CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5AEC48A51F0D2FCB00CFE8CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5AEC48A71F0D2FCB00CFE8CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5AEC48AA1F0D2FCB00CFE8CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5AEC48AC1F0D2FCB00CFE8CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5AEC48B21F0D326B00CFE8CE /* SparkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkProvider.swift; sourceTree = "<group>"; };
 		DDBB17952585337DE19B7236 /* Pods-SparkCallkitApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SparkCallkitApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SparkCallkitApp/Pods-SparkCallkitApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,10 +69,9 @@
 			children = (
 				5AEC48A01F0D2FCB00CFE8CE /* AppDelegate.swift */,
 				5AEC48A21F0D2FCB00CFE8CE /* ViewController.swift */,
-				5AEC48A41F0D2FCB00CFE8CE /* Main.storyboard */,
 				5AEC48A71F0D2FCB00CFE8CE /* Assets.xcassets */,
-				5AEC48A91F0D2FCB00CFE8CE /* LaunchScreen.storyboard */,
 				5AEC48AC1F0D2FCB00CFE8CE /* Info.plist */,
+				5AEC48B21F0D326B00CFE8CE /* SparkProvider.swift */,
 			);
 			path = SparkCallkitApp;
 			sourceTree = "<group>";
@@ -151,9 +148,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AEC48AB1F0D2FCB00CFE8CE /* LaunchScreen.storyboard in Resources */,
 				5AEC48A81F0D2FCB00CFE8CE /* Assets.xcassets in Resources */,
-				5AEC48A61F0D2FCB00CFE8CE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,30 +208,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AEC48A31F0D2FCB00CFE8CE /* ViewController.swift in Sources */,
+				5AEC48B31F0D326B00CFE8CE /* SparkProvider.swift in Sources */,
 				5AEC48A11F0D2FCB00CFE8CE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		5AEC48A41F0D2FCB00CFE8CE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5AEC48A51F0D2FCB00CFE8CE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		5AEC48A91F0D2FCB00CFE8CE /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5AEC48AA1F0D2FCB00CFE8CE /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5AEC48AD1F0D2FCB00CFE8CE /* Debug */ = {
@@ -381,6 +358,7 @@
 				5AEC48B11F0D2FCB00CFE8CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
